@@ -38,12 +38,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "fabric_1_16_5" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -86,12 +84,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "fabric_1_20_1" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -111,7 +107,7 @@ jobs:
         files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
-        
+
   # ==================== Fabric 1.21 ====================
   build_fabric_1_21:
     runs-on: windows-latest
@@ -134,12 +130,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "fabric_1_21" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -160,7 +154,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
-  # ==================== Fabric 1.21.6 ====================
+ # ==================== Fabric 1.21.6 ====================
   build_fabric_1_21_6:
     runs-on: windows-latest
     permissions:
@@ -182,12 +176,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "fabric_1_21_6" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -230,12 +222,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "fabric_1_21_11" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -278,12 +268,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "fabric_26_1" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -303,8 +291,7 @@ jobs:
         files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
-
- # ==================== Forge 1.16.5 ====================
+  # ==================== Forge 1.16.5 ====================
   build_forge_1_16_5:
     runs-on: windows-latest
     permissions:
@@ -326,12 +313,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "forge_1_16_5" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -374,12 +359,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "forge_1_20_1" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
@@ -422,12 +405,10 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $jarFiles = Get-ChildItem -Path "neoforge_1_21" -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
-          $_.FullName -notlike "*original*.jar" -and
-          $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*"
+          $_.FullName -notlike "*original*.jar"
         }
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
