@@ -3,10 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradl
-
-
-
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
 
 
@@ -40,16 +37,35 @@ jobs:
       run: |
         cd fabric_1_16_5
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
+      continue-on-error: false
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_16_5"
-        path: fabric_1_16_5/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: fabric_1_16_5/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -71,16 +87,34 @@ jobs:
       run: |
         cd fabric_1_20_1
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_20_1"
-        path: fabric_1_20_1/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: fabric_1_20_1/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -102,16 +136,34 @@ jobs:
       run: |
         cd fabric_1_21
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_21"
-        path: fabric_1_21/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: fabric_1_21/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -133,16 +185,34 @@ jobs:
       run: |
         cd fabric_1_21_6
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_21_6"
-        path: fabric_1_21_6/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: fabric_1_21_6/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -164,16 +234,34 @@ jobs:
       run: |
         cd fabric_1_21_11
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_21_11"
-        path: fabric_1_21_11/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: fabric_1_21_11/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -195,16 +283,34 @@ jobs:
       run: |
         cd fabric_26_1
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_26_1"
-        path: fabric_26_1/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: fabric_26_1/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -226,16 +332,34 @@ jobs:
       run: |
         cd forge_1_16_5
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_forge_1_16_5"
-        path: forge_1_16_5/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: forge_1_16_5/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -257,16 +381,34 @@ jobs:
       run: |
         cd forge_1_20_1
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_forge_1_20_1"
-        path: forge_1_20_1/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: forge_1_20_1/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
 
@@ -288,15 +430,33 @@ jobs:
       run: |
         cd neoforge_1_21
         gradlew build
+    - name: Find and upload artifact
+      shell: pwsh
+      run: |
+        $jarFiles = Get-ChildItem -Recurse -Filter "*.jar" | Where-Object {
+          $_.FullName -notlike "*-sources.jar" -and
+          $_.FullName -notlike "*-dev.jar" -and
+          $_.FullName -notlike "*original*.jar" -and
+          $_.DirectoryName -like "*build*"
+        }
+        if ($jarFiles.Count -eq 0) {
+          Write-Host "No jar files found!"
+          exit 1
+        }
+        foreach ($jar in $jarFiles) {
+          Write-Host "Found: $($jar.FullName)"
+          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\$($jar.Name)" -Force
+        }
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_neoforge_1_21"
-        path: neoforge_1_21/build/libs/
+        path: artifacts/*.jar
+        if-no-files-found: error
     - name: release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: neoforge_1_21/build/libs/*.jar
+        files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
