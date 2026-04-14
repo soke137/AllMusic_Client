@@ -19,8 +19,6 @@ jobs:
   # ==================== Fabric 1.16.5 ====================
   build_fabric_1_16_5:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -35,37 +33,16 @@ jobs:
       run: |
         cd fabric_1_16_5
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*fabric*1.16.5*" -or
-          $_.Name -like "*fabric*1_16_5*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_fabric_1_16_5"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_fabric_1_16_5"
+        path: client/target/
+        if-no-files-found: warn
 
   # ==================== Fabric 1.20.1 ====================
   build_fabric_1_20_1:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -80,37 +57,16 @@ jobs:
       run: |
         cd fabric_1_20_1
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*fabric*1.20.1*" -or
-          $_.Name -like "*fabric*1_20_1*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_fabric_1_20_1"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_fabric_1_20_1"
+        path: client/target/
+        if-no-files-found: warn
 
   # ==================== Fabric 1.21 ====================
   build_fabric_1_21:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -125,37 +81,16 @@ jobs:
       run: |
         cd fabric_1_21
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*fabric*1.21*" -and
-          $_.Name -notlike "*1.21.6*" -and
-          $_.Name -notlike "*1.21.11*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_fabric_1_21"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_fabric_1_21"
+        path: client/target/
+        if-no-files-found: warn
+
   # ==================== Fabric 1.21.6 ====================
   build_fabric_1_21_6:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -170,36 +105,16 @@ jobs:
       run: |
         cd fabric_1_21_6
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*fabric*1.21.6*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_fabric_1_21_6"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_fabric_1_21_6"
+        path: client/target/
+        if-no-files-found: warn
 
-  # ==================== Fabric 1.21.11 ====================
+# ==================== Fabric 1.21.11 ====================
   build_fabric_1_21_11:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -214,36 +129,16 @@ jobs:
       run: |
         cd fabric_1_21_11
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*fabric*1.21.11*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_fabric_1_21_11"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_fabric_1_21_11"
+        path: client/target/
+        if-no-files-found: warn
 
   # ==================== Fabric 26.1 ====================
   build_fabric_26_1:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -258,37 +153,16 @@ jobs:
       run: |
         cd fabric_26_1
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*fabric*26.1*" -or
-          $_.Name -like "*fabric*26_1*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_fabric_26_1"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_fabric_26_1"
+        path: client/target/
+        if-no-files-found: warn
 
   # ==================== Forge 1.16.5 ====================
   build_forge_1_16_5:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -303,35 +177,16 @@ jobs:
       run: |
         cd forge_1_16_5
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*forge*1.16.5*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_forge_1_16_5"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_forge_1_16_5"
+        path: client/target/
+        if-no-files-found: warn
+
   # ==================== Forge 1.20.1 ====================
   build_forge_1_20_1:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -346,36 +201,16 @@ jobs:
       run: |
         cd forge_1_20_1
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*forge*1.20.1*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_forge_1_20_1"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/*.jar
-        append_body: true
-        fail_on_unmatched_files: false
+        name: "build_output_forge_1_20_1"
+        path: client/target/
+        if-no-files-found: warn
 
   # ==================== NeoForge 1.21 ====================
   build_neoforge_1_21:
     runs-on: windows-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 25
@@ -390,29 +225,43 @@ jobs:
       run: |
         cd neoforge_1_21
         gradlew build
-    - name: Find and upload artifact
-      shell: pwsh
-      run: |
-        $jarFiles = Get-ChildItem -Path "client/target" -Filter "*.jar" | Where-Object {
-          $_.Name -like "*neoforge*1.21*" -and
-          $_.Name -notlike "*1.21.6*" -and
-          $_.Name -notlike "*1.21.11*"
-        }
-        if ($jarFiles.Count -eq 0) { exit 1 }
-        New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
-        foreach ($jar in $jarFiles) {
-          Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-        }
-    - name: Upload artifact
+    - name: Upload raw artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "allmusic_client_neoforge_1_21"
-        path: artifacts/*.jar
-        if-no-files-found: error
-    - name: Release
+        name: "build_output_neoforge_1_21"
+        path: client/target/
+        if-no-files-found: warn
+
+  # ==================== 统一收集并发布 ====================
+  publish:
+    runs-on: ubuntu-latest
+    needs: [build_fabric_1_16_5, build_fabric_1_20_1, build_fabric_1_21, build_fabric_1_21_6, build_fabric_1_21_11, build_fabric_26_1, build_forge_1_16_5, build_forge_1_20_1, build_neoforge_1_21]
+    if: always()
+    permissions:
+      contents: write
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: all_artifacts
+    - name: Collect jar files
+      shell: bash
+      run: |
+        mkdir -p release_jars
+        find all_artifacts -name "*.jar" -type f | while read jar; do
+          echo "Found: $jar"
+          cp "$jar" release_jars/
+        done
+        echo "Total jars collected: $(ls release_jars | wc -l)"
+    - name: Upload final artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: "allmusic_client_all_versions"
+        path: release_jars/*.jar
+    - name: Create Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: artifacts/*.jar
+        files: release_jars/*.jar
         append_body: true
         fail_on_unmatched_files: false
