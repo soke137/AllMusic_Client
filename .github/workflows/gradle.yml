@@ -16,6 +16,7 @@ on:
       - '*'
 
 jobs:
+  # ==================== Fabric 1.16.5 ====================
   build_fabric_1_16_5:
     runs-on: windows-latest
     permissions:
@@ -29,7 +30,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd fabric_1_16_5
@@ -37,38 +38,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "fabric_1_16_5"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "fabric_1_16_5" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_16_5"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
@@ -76,6 +64,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
+  # ==================== Fabric 1.20.1 ====================
   build_fabric_1_20_1:
     runs-on: windows-latest
     permissions:
@@ -89,7 +78,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd fabric_1_20_1
@@ -97,45 +86,33 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "fabric_1_20_1"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "fabric_1_20_1" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_20_1"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
         files: artifacts/*.jar
         append_body: true
         fail_on_unmatched_files: false
-
+        
+  # ==================== Fabric 1.21 ====================
   build_fabric_1_21:
     runs-on: windows-latest
     permissions:
@@ -149,7 +126,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd fabric_1_21
@@ -157,38 +134,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "fabric_1_21"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "fabric_1_21" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_21"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
@@ -196,6 +160,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
+  # ==================== Fabric 1.21.6 ====================
   build_fabric_1_21_6:
     runs-on: windows-latest
     permissions:
@@ -209,7 +174,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd fabric_1_21_6
@@ -217,38 +182,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "fabric_1_21_6"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "fabric_1_21_6" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_21_6"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
@@ -256,6 +208,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
+  # ==================== Fabric 1.21.11 ====================
   build_fabric_1_21_11:
     runs-on: windows-latest
     permissions:
@@ -269,7 +222,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd fabric_1_21_11
@@ -277,38 +230,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "fabric_1_21_11"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "fabric_1_21_11" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_1_21_11"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
@@ -316,6 +256,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
+  # ==================== Fabric 26.1 ====================
   build_fabric_26_1:
     runs-on: windows-latest
     permissions:
@@ -329,7 +270,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd fabric_26_1
@@ -337,38 +278,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "fabric_26_1"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "fabric_26_1" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_fabric_26_1"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
@@ -376,6 +304,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
+ # ==================== Forge 1.16.5 ====================
   build_forge_1_16_5:
     runs-on: windows-latest
     permissions:
@@ -389,7 +318,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd forge_1_16_5
@@ -397,38 +326,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "forge_1_16_5"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "forge_1_16_5" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_forge_1_16_5"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
@@ -436,6 +352,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
+  # ==================== Forge 1.20.1 ====================
   build_forge_1_20_1:
     runs-on: windows-latest
     permissions:
@@ -449,7 +366,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd forge_1_20_1
@@ -457,38 +374,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "forge_1_20_1"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "forge_1_20_1" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_forge_1_20_1"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
@@ -496,6 +400,7 @@ jobs:
         append_body: true
         fail_on_unmatched_files: false
 
+  # ==================== NeoForge 1.21 ====================
   build_neoforge_1_21:
     runs-on: windows-latest
     permissions:
@@ -509,7 +414,7 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-    - name: build
+    - name: Build
       shell: cmd
       run: |
         cd neoforge_1_21
@@ -517,38 +422,25 @@ jobs:
     - name: Find and upload artifact
       shell: pwsh
       run: |
-        $modulePath = "neoforge_1_21"
-        $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
+        $jarFiles = Get-ChildItem -Path "neoforge_1_21" -Recurse -Filter "*.jar" | Where-Object {
           $_.FullName -notlike "*-sources.jar" -and
           $_.FullName -notlike "*-dev.jar" -and
           $_.FullName -notlike "*original*.jar" -and
           $_.FullName -notlike "*gradle*" -and
-          $_.FullName -like "*build*" -and
-          $_.Name -like "allmusic*"
+          $_.FullName -like "*build*"
         }
-        if ($jarFiles.Count -eq 0) {
-          $jarFiles = Get-ChildItem -Path $modulePath -Recurse -Filter "*.jar" | Where-Object {
-            $_.FullName -notlike "*-sources.jar" -and
-            $_.FullName -notlike "*-dev.jar" -and
-            $_.FullName -notlike "*original*.jar" -and
-            $_.FullName -notlike "*gradle*" -and
-            $_.FullName -like "*build*"
-          }
-        }
-        Write-Host "Found $($jarFiles.Count) jar files"
         if ($jarFiles.Count -eq 0) { exit 1 }
         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts" -ErrorAction SilentlyContinue
         foreach ($jar in $jarFiles) {
           Copy-Item $jar.FullName -Destination "$env:GITHUB_WORKSPACE\artifacts\" -Force
-          Write-Host "Copied: $($jar.Name)"
         }
-    - name: upload artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: "allmusic_client_neoforge_1_21"
         path: artifacts/*.jar
         if-no-files-found: error
-    - name: release
+    - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
